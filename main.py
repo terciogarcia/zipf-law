@@ -18,7 +18,7 @@ def count_words(all_words):
     return dict_words
 
 
-def plot_frequency_chart(sorted_words):
+def plot_bar(sorted_words):
     words = [x[0] for x in sorted_words]
     frequence = [y[1] for y in sorted_words]
     plt.bar(words, frequence)
@@ -29,7 +29,20 @@ def plot_frequency_chart(sorted_words):
     plt.show()
 
 
+def plot_log_log(sorted_words):
+    length = len(sorted_words)
+    indexes = [x for x in range(length)]
+    frequence = [y[1] for y in sorted_words]
+    plt.loglog(indexes, frequence, basey=2, basex=2)
+    plt.title('Frequência de ocorrência das palavras')
+    plt.ylabel('Ocorrências')
+    plt.xlabel('Palavras')
+    plt.xticks(rotation=90)
+    plt.show()
+
+
 if __name__ == '__main__':
     words = count_words(get_words_from_file('bible.txt'))
     sorted_words = sorted(words.items(), reverse=True, key=lambda kv: kv[1])
-    plot_frequency_chart(sorted_words[:50])
+    plot_log_log(sorted_words)
+    plot_bar(sorted_words[:50])
